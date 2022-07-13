@@ -40,3 +40,7 @@ You can preview the production build with `npm run preview`.
 ## Firebase
 
 npm i -g firebase-tools
+
+## Svelte
+
+routes 폴더 안 하위폴더가 하나의 페이지가 됨 . ex) calculator folder = /calculator
