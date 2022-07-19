@@ -7,39 +7,36 @@
 		id: string;
 	};
 
-	let totalArr: number[] | string[] = [];
+	let totalArr: string[] = []; //그냥 모두 string 처리해도 될듯함.
 	let total: number = 0;
 	let errorMessage: string = '';
 	let clearSet: boolean = false;
-	let a: number = 0;
-	let b: number = 1;
-
-	// @ts-ignore
-	$: lastIsNumber = totalArr[totalArr.length - 1] && !isNaN(totalArr[totalArr.length - 1]);
+	//@ts-ignore
+	$: lastIsNumber = totalArr[totalArr.length - 1] && !isNaN(totalArr[totalArr.length - 1]); // $: JS label syntax
 	$: if (total > Number.MAX_VALUE || total < -Number.MAX_VALUE) {
 		errorMessage = 'err';
 		totalArr = [];
 	}
-	function calcMath(o: number) {
+
+	function calcMath(o: any) {
 		const operations = {
-			'+': function (x: number, y: number) {
-				// @ts-ignore
+			'+': function (x: any, y: any) {
 				return (x + y).toPrecision(9) / 1;
 			},
-			'-': function (x: number, y: number) {
+			'-': function (x: any, y: any) {
 				// @ts-ignore
 				return (x - y).toPrecision(9) / 1;
 			},
-			'*': function (x: number, y: number) {
+			x: function (x: any, y: any) {
 				// @ts-ignore
-				return (x - y).toPrecision(9) / 1;
+				return (x * y).toPrecision(9) / 1;
 			},
-			'/': function (x: number, y: number) {
+			'÷': function (x: any, y: any) {
 				// @ts-ignore
 				return (x / y).toPrecision(9) / 1;
 			}
 		};
-		if (totalArr[totalArr.length - 3] === 1) {
+		if (totalArr[totalArr.length - 3] === '1') {
 			totalArr = [total, o];
 		}
 
@@ -53,33 +50,29 @@
 			total = operations[prevOperand](Number(total), Number(totalArr[l - 2]));
 		}
 	}
+
 	function handleNumber(e: Event) {
 		clearSet = false;
 		let input = e.target as HTMLElement;
 		if (lastIsNumber) {
 			if (
-				// @ts-ignore
 				totalArr[totalArr.length - 1].indexOf('.') === -1 &&
 				totalArr[totalArr.length - 1] === '0'
 			) {
 				totalArr[totalArr.length - 1] = input.innerText as any;
 			} else {
-				// @ts-ignore
 				totalArr[totalArr.length - 1] = (totalArr[totalArr.length - 1] + input.innerText) as any;
 			}
 		} else {
 			if (totalArr[totalArr.length - 1] === '=') {
 				handleAC();
 			}
-			// @ts-ignore
 			totalArr.push(input.innerText as any);
 		}
 
 		if (totalArr.length === 1) {
-			// @ts-ignore
 			total = parseFloat(totalArr[0]);
 		}
-
 		totalArr = totalArr;
 	}
 
@@ -89,26 +82,22 @@
 			// @ts-ignore
 			if (isNaN(totalArr[totalArr.length - 1])) {
 				if (totalArr[totalArr.length - 1] === '=') {
-					// @ts-ignore
 					totalArr = [total, input.innerText as any];
 				} else {
-					// @ts-ignore
 					totalArr[totalArr.length - 1] = input.innerText as any;
 				}
 			} else {
-				// @ts-ignore
 				totalArr.push(input.innerText as any);
-				// @ts-ignore
+
 				calcMath(input.innerText as any);
 			}
 		} else if (errorMessage === 'err') {
 			total = 0;
-			// @ts-ignore
+
 			totalArr = ['0', input.innerText as any];
 		} else {
-			// @ts-ignore
+			//@ts-ignore
 			totalArr.push(total);
-			// @ts-ignore
 			totalArr.push(input.innerText as any);
 		}
 		totalArr = totalArr;
@@ -118,8 +107,7 @@
 		if (totalArr.length > 2) {
 			if (totalArr[totalArr.length - 1] !== '=') {
 				if (lastIsNumber) {
-					// @ts-ignore
-					totalArr.push(0);
+					totalArr.push('=');
 				} else {
 					totalArr[totalArr.length - 1] = '=';
 				}
@@ -140,15 +128,12 @@
 			if (last === '=') {
 				handleAC();
 			}
-			// @ts-ignore
 			totalArr.push('0.');
 			if (errorMessage === 'err') {
 				errorMessage = '0.';
 			}
 			totalArr = totalArr;
-			// @ts-ignore
 		} else if (last.indexOf('.') === -1) {
-			// @ts-ignore
 			totalArr[totalArr.length - 1] = totalArr[totalArr.length - 1] + '.';
 		}
 	}
@@ -166,12 +151,12 @@
 			}
 		} else if (totalArr[totalArr.length - 1] === '=') {
 			total = 0 - total;
+			//@ts-ignore
 			totalArr = [total];
 		}
 	}
 
 	function handleClear() {
-		// @ts-ignore
 		if (totalArr[totalArr.length - 1] === '=' || errorMessage === 'err') {
 			clearSet = true;
 		}
@@ -207,7 +192,6 @@
 			// @ts-ignore
 			switch (e.key) {
 				case 'Enter':
-					// @ts-ignore
 					e.preventDefault();
 					handleEqual();
 					break;
@@ -224,15 +208,14 @@
 		}
 	}
 
-	const textNumbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-	const buttons: buttonType[] = [
+	const calcButtons: buttonType[] = [
 		{
-			value: 'ac',
+			value: 'AC',
 			func: handleAC,
 			id: 'ac'
 		},
 		{
-			value: 'c',
+			value: 'C',
 			func: handleClear,
 			id: 'clear'
 		},
@@ -242,9 +225,14 @@
 			id: 'neg'
 		},
 		{
-			value: '/',
+			value: '+',
 			func: handleOperand,
-			id: 'divide'
+			id: 'add'
+		},
+		{
+			value: '-',
+			func: handleOperand,
+			id: 'minus'
 		},
 		{
 			value: 'x',
@@ -252,10 +240,11 @@
 			id: 'multiply'
 		},
 		{
-			value: '-',
+			value: '÷',
 			func: handleOperand,
-			id: 'minus'
+			id: 'divide'
 		},
+
 		{
 			value: '1',
 			func: handleNumber,
@@ -271,11 +260,7 @@
 			func: handleNumber,
 			id: 'nine'
 		},
-		{
-			value: '+',
-			func: handleOperand,
-			id: 'add'
-		},
+
 		{
 			value: '4',
 			func: handleNumber,
@@ -322,6 +307,7 @@
 			id: 'decimal'
 		}
 	];
+	console.log(totalArr);
 </script>
 
 <!-- <div class="frame">
@@ -332,7 +318,7 @@
 
 <svelte:body on:keydown={handleKeypress} />
 
-<Button {total} {buttons} {totalArr} />
+<Button {total} {calcButtons} {totalArr} />
 
 <!-- <style lang="scss">
 	.frame {
