@@ -31,6 +31,7 @@
 </div>
 
 <style lang="scss">
+	// grid, flex,css 잘  다뤄야함
 	.calculator {
 		display: grid;
 		// grid-template-columns: 24% 24% 24% 24%;

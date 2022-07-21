@@ -31,7 +31,7 @@
 				// @ts-ignore
 				return (x * y).toPrecision(9) / 1;
 			},
-			'÷': function (x: any, y: any) {
+			'/': function (x: any, y: any) {
 				// @ts-ignore
 				return (x / y).toPrecision(9) / 1;
 			}
