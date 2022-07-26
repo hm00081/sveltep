@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@types/d3-scale": "^4.0.2",
 		"prettier": "2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.44.0",
@@ -30,7 +31,10 @@
 		"@sveltejs/adapter-static": "^1.0.0-next.35",
 		"@types/node-sass": "^4.11.3",
 		"@types/sass": "^1.43.1",
+		"d3-scale": "^4.0.2",
+		"gh-pages": "^4.0.0",
 		"node-sass": "^7.0.1",
-		"sass": "^1.53.0"
+		"sass": "^1.53.0",
+		"svelte-chartjs": "^2.0.1"
 	}
 }

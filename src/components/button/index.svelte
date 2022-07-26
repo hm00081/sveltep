@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let text: string;
-	export let color: 'orange' | 'grey' | 'dark-grey';
+	// export let color: 'orange' | 'grey' | 'dark-grey';
 	type buttonType = {
 		value: string;
 		func: () => void;
