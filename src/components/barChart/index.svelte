@@ -28,36 +28,34 @@
 	// #display {
 	// }
 </style> -->
-<script>
+
+<script lang="ts">
 	import { scaleLinear } from 'd3-scale';
 
-	const points = [
-		{ year: 2012, birthrate: 15 },
-		{ year: 2013, birthrate: 14.6 },
-		{ year: 2014, birthrate: 14.4 },
-		{ year: 2015, birthrate: 14 },
-		{ year: 2016, birthrate: 13 },
-		{ year: 2017, birthrate: 12.4 },
-		{ year: 2018, birthrate: 13 },
-		{ year: 2019, birthrate: 12.4 }
+	const bar = [
+		{ year: 2012, birthrate: 0.5 },
+		{ year: 2013, birthrate: 1 },
+		{ year: 2014, birthrate: 1.5 },
+		{ year: 2015, birthrate: 2 },
+		{ year: 2016, birthrate: 2.5 },
+		{ year: 2017, birthrate: 3 },
+		{ year: 2018, birthrate: 3.5 },
+		{ year: 2019, birthrate: 4 }
 	];
 
 	const xTicks = [1990, 1995, 2000, 2005, 2010, 2015];
-	const yTicks = [0, 5, 10, 15, 20];
-	const padding = { top: 20, right: 15, bottom: 20, left: 25 };
-
+	const yTicks = ["0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"];
+	const padding = { top: 20, right: 150, bottom: 20, left: 25 };
+   
 	let width = 500;
-	let height = 200;
-
-	function formatMobile(tick) {
-		return "'" + tick.toString().slice(-2);
-	}
+	let height = 400;
 
 	$: xScale = scaleLinear()
 		.domain([0, xTicks.length])
 		.range([padding.left, width - padding.right]);
 
 	$: yScale = scaleLinear()
+	//@ts-ignore
 		.domain([0, Math.max.apply(null, yTicks)])
 		.range([height - padding.bottom, padding.top]);
 
@@ -65,7 +63,7 @@
 	$: barWidth = innerWidth / xTicks.length;
 </script>
 
-<h2>US birthrate by year</h2>
+<h2>Worldwide Number of Electric Cars</h2>
 
 <div class="chart" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg>
@@ -74,14 +72,14 @@
 			{#each yTicks as tick}
 				<g class="tick tick-{tick}" transform="translate(0, {yScale(tick)})">
 					<line x2="100%" />
-					<text y="-4">{tick} {tick === 20 ? ' per 1,000 population' : ''}</text>
+					<text y="1" x="-1">{tick} {tick === 20 ? ' per 1,000 population' : ''}</text>
 				</g>
 			{/each}
 		</g>
 
 		<!-- x axis -->
 		<g class="axis x-axis">
-			{#each points as point, i}
+			{#each bar as point, i}
 				<g class="tick" transform="translate({xScale(i)},{height})">
 					<text x={barWidth / 2} y="-4">{width > 380 ? point.year : formatMobile(point.year)}</text>
 				</g>
@@ -89,9 +87,9 @@
 		</g>
 
 		<g class="bars">
-			{#each points as point, i}
+			{#each bar as point, i}
 				<rect
-					x={xScale(i) + 2}
+					x={(xScale(i) + 2	)}
 					y={yScale(point.birthrate)}
 					width={barWidth - 4}
 					height={yScale(0) - yScale(point.birthrate)}
@@ -130,7 +128,7 @@
 	}
 
 	.tick text {
-		fill: #ccc;
+		fill: black;
 		text-anchor: start;
 	}
 
@@ -143,7 +141,8 @@
 	}
 
 	.bars rect {
-		fill: #a11;
+		fill: green;
+/* fill: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%); */
 		stroke: none;
 		opacity: 0.65;
 	}
