@@ -29,10 +29,16 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-static": "^1.0.0-next.35",
+		"@types/axios": "^0.14.0",
+		"@types/d3": "^7.4.0",
+		"@types/lodash": "^4.14.182",
 		"@types/node-sass": "^4.11.3",
 		"@types/sass": "^1.43.1",
+		"axios": "^0.27.2",
+		"d3-line": "^0.0.1",
 		"d3-scale": "^4.0.2",
 		"gh-pages": "^4.0.0",
+		"lodash": "^4.17.21",
 		"node-sass": "^7.0.1",
 		"sass": "^1.53.0",
 		"svelte-chartjs": "^2.0.1"
