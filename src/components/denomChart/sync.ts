@@ -34,15 +34,7 @@ export async function updateData(days: number) {
 			} as PriceUnit;
 		})
 		.value();
-	console.log('eh');
-	console.log(prices);
 	priceData.set(prices);
-}
-
-export function updateDenom() {
-	const a = updateData(7);
-	console.log('eh');
-	console.log(a);
 }
 
 // [[Prototype]]: Promise

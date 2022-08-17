@@ -1,47 +1,45 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { updateData, priceData, type PriceUnit } from './sync';
-	import d3 from 'd3';
-	import lodash from 'lodash';
+	import _ from 'lodash';
+	import * as d3 from 'd3';
 
 	let value: number = 7;
-	let prices: [number, number][] = []; 
-	let path: string = '';
+	let minV: number;
+	let maxV: number;
+	let prices: [number, number][] = [];
+	let path: string | null = '';
+	let eleContainerWidth: number;
+	let eleContainerHeight: number;
+	let diff: number;
 
 	onMount(() => {
 		updateData(value);
 	});
-	const line = d3.line<[number,number]>().x((d) => d[0] * 10).y((d) => d[0] * 2000 + 200)
-	.curve(d3.curveBasis);
-	line([
-		[0,0],
-	    [0,0]
-	])
-
+	const line = d3
+		.line<[number, number]>()
+		.x((d) => (d[0] * eleContainerWidth) / prices.length)
+		.y((d) => d[1] * 20000 + 100)
+		.curve(d3.curveBasis);
+	// min -> 0
+	// max -> height
+	//@ts-ignore
+	// console.log(minV);
 	$: {
-        prices = _($priceData)
-		.map((d, i)=> [i, d.price] as [number, number]).take(100).value()
+		prices = _($priceData)
+			.map((d, i) => [i, d.price] as [number, number])
+			.take(100)
+			.value();
 		//@ts-ignore
 		path = line(prices);
-        console.log(prices);
-		);
+		console.warn('path', path);
+		// console.log(prices); // 가격 정보 잘 나옴
 	}
 
 	$: {
-
+		console.log(eleContainerWidth, eleContainerHeight);
 	}
-
-	//useEffect 데이터값이 재 호출 될시 함수를 다시 불러오는 기능.
-	// 1 : axios를 이용해서 데이터를 불러온다
-	// 2 : 불러온 데이터를 Table 구성한다
-	// 3 : select를 이용해서 7 , 30 , 등 다양한 기준의 데이터를 확인 할 수 있게 한다.
-
-	// Option :
-	// - 정렬되는 테이블 Table 구현 (매우 어려움)
-	// - 헤더는 내려오면 안됨 (스크롤을 하더라고, 테이블의 헤더는 상단에 고정)
-
-	// 페이지 구성:
-	// - 테이블 영역 스크롤 시 header 는 테이블 영역 top에 고정.
+	//onDestroy(() => {})
 
 	const columns = [
 		{
@@ -91,10 +89,14 @@
 			<option value="360">360</option>
 		</select>
 	</div>
-	<div class="svg-container">
-		<svg>
-			<path />
-			<!-- 화면 비에 맞는 그래프 구성 -->
+	<div
+		class="svg-container"
+		style="width:100%; height:500px"
+		bind:clientWidth={eleContainerWidth}
+		bind:clientHeight={eleContainerHeight}
+	>
+		<svg style="width: 100%; height: 100%">
+			<path d={path} stroke="#000" fill="none" stroke-width="1px" />
 		</svg>
 	</div>
 	<h2>Data Length: {$priceData.length}</h2>

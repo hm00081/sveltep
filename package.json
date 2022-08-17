@@ -16,7 +16,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
-		"@types/d3-scale": "^4.0.2",
+		"@types/d3": "^7.4.0",
 		"prettier": "2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.44.0",
@@ -30,11 +30,11 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^1.0.0-next.35",
 		"@types/axios": "^0.14.0",
-		"@types/d3": "^7.4.0",
 		"@types/lodash": "^4.14.182",
 		"@types/node-sass": "^4.11.3",
 		"@types/sass": "^1.43.1",
 		"axios": "^0.27.2",
+		"d3": "^7.6.1",
 		"d3-line": "^0.0.1",
 		"d3-scale": "^4.0.2",
 		"gh-pages": "^4.0.0",
