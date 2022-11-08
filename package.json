@@ -17,6 +17,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/d3": "^7.4.0",
+		"@types/jquery": "^3.5.14",
 		"prettier": "2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.44.0",
@@ -33,6 +34,7 @@
 		"@types/lodash": "^4.14.182",
 		"@types/node-sass": "^4.11.3",
 		"@types/sass": "^1.43.1",
+		"@types/sumoselect": "^3.3.0",
 		"axios": "^0.27.2",
 		"d3": "^7.6.1",
 		"d3-line": "^0.0.1",
@@ -41,6 +43,7 @@
 		"lodash": "^4.17.21",
 		"node-sass": "^7.0.1",
 		"sass": "^1.53.0",
+		"sumoselect": "^3.4.8",
 		"svelte-chartjs": "^2.0.1"
 	}
 }
