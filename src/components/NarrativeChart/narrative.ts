@@ -48,6 +48,7 @@ export interface Point {
 	diff: number;
 	std: number;
 }
+
 export interface SpeechPoint {
 	startPoint: Point;
 	endPoint: Point;
@@ -55,6 +56,7 @@ export interface SpeechPoint {
 	speechs: Speech[];
 	size: number;
 }
+
 export interface User {
 	name: string;
 	speechPoints: SpeechPoint[];
@@ -100,7 +102,7 @@ interface DisplayKeywordItem {
 	label: string;
 	barRatio: number;
 	count: number;
-}
+} // barchart 용
 interface DisplayScriptItem {
 	profileImage: string;
 	talker: string;
@@ -185,17 +187,6 @@ export default class Narrative {
 		imageDialog: false,
 		selectedImageUrl: ''
 	};
-
-	private images = [
-		{
-			imageId: '787654321012345',
-			url: 'http://www.kaids.or.kr/files/2014/08/25/a54b47fa02d198cc9294267f486eaa61155042.jpg'
-		},
-		{
-			imageId: '787654321012344',
-			url: 'https://t1.daumcdn.net/cfile/tistory/255EE44956CBEE3424'
-		}
-	];
 
 	private sideviewMode: string = 'script';
 	private selectedKeyword: string = '';
