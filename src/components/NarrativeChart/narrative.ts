@@ -35,7 +35,7 @@ const color1 = d3
 	.interpolate(d3.interpolateHcl);
 
 export interface Speech {
-	text: string;
+	text: string; // = sentence
 	index: number;
 	name: string;
 	morphs: string | null;
