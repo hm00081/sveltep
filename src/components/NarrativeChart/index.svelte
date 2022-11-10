@@ -2,24 +2,24 @@
 	import { select } from 'd3';
 	import * as d3 from 'd3';
 	import $ from 'jquery';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+    import { throttle } from 'throttle-debounce'
 	import _ from 'lodash';
-    import  * as sumoselect from 'sumoselect';'
 
 	var dataset = null;
 	var svg = null;
 	const colors = [
-            '#53A4E3',
+       '#53A4E3',
        '#9B9B9B',
-  '#F8BE14',
-  '#FF6363',
-  '#677686',
-  '#FFa834',
-  '#57915E',
-  '#90DAE4',
-  '#FF6363',
-  '#677686'
-];
+       '#F8BE14',
+       '#FF6363',
+       '#677686',
+       '#FFa834',
+       '#57915E',
+       '#90DAE4',
+       '#FF6363',
+       '#677686'
+    ];
     let path: string | null | any = '';
 	// Store configuration parameters for the algorithm and the visualization
 	var options = {

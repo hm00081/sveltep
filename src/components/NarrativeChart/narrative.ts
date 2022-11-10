@@ -5,10 +5,33 @@
 
 import _ from 'lodash';
 import axios from 'axios';
+import debateUtterances from '../../data/기본소득/utterance_objects.json'; // transcript원본..
+import {
+	UtteranceObject,
+	SentenceObject,
+	TermCountDict,
+	StopwordDict,
+	DebateDataSet,
+	EvaluationDataSet,
+	DataReqBody
+} from '../../interfaces/DebateDataInterface';
+import _ from 'lodash';
+import axios from 'axios';
 import * as d3 from 'd3';
-import debateUtterances from '../../data/기본소득/utterance_objects.json';
-import { UtteranceObject } from '../../interfaces/DebateDataInterface';
 // import api from '@/lib';
+// import { MorphWord } from '../nlp/nlp';
+// import data from '@/data/raw/out_일상대화_화장품_구매대화.json';
+// import morphedData from '@/data/morphed/morphed02.json'
+// import d_contents from '@/data/contents/defaultMorphData.json';
+// import d_networkData from '@/data/contents/defaultNetworkData.json';
+// import brainstorming_fullscript from '@/views/topicmap-suhyun/infovis-json-data/프로젝트기획회의록/project-script.json';
+// import brainstorming_contents from './brainstormingMorphData.json';
+// import brainstorming_networkData from '@/views/topicmap-suhyun/infovis-json-data/프로젝트기획회의록/project-networkdata.json';
+// import idlabmeeting_fullscript from '@/views/topicmap-suhyun/infovis-json-data/idlabMeeting/idlabmeeting-script.json';
+// import idlabmeeting_contents from './idlabmeetingMorphData.json';
+// tslint:disable-next-line: max-line-length
+// import idlabmeeting_networkData from '@/views/topicmap-suhyun/infovis-json-data/idlabMeeting/idlabmeeting-networkdata.json';
+//TODO full script === transcript
 
 const colors = [
 	'#53A4E3',
@@ -26,6 +49,7 @@ const colors = [
 function getColor(i: number): string {
 	return colors[i % colors.length];
 }
+
 const color1 = d3
 	.scaleLinear()
 	.domain([1, 3])
@@ -47,7 +71,7 @@ export interface Point {
 	y: number;
 	diff: number;
 	std: number;
-}
+} // 내러티브 데이터 point
 
 export interface SpeechPoint {
 	startPoint: Point;
@@ -62,7 +86,7 @@ export interface User {
 	speechPoints: SpeechPoint[];
 	speechs: Speech[];
 	path: any;
-	validSpeechRanking: number;
+	validSpeechRanking: number; //총 유저가 발화한 텍스트 량에 비례
 	numOfValidSpeech: number;
 	validSpeechTime: number;
 	tooltipValidSpeechTime: boolean;
@@ -98,11 +122,13 @@ interface ActionItem {
 	tooltipShown: boolean;
 	selected: boolean;
 }
+
 interface DisplayKeywordItem {
 	label: string;
 	barRatio: number;
 	count: number;
 } // barchart 용
+
 interface DisplayScriptItem {
 	profileImage: string;
 	talker: string;
@@ -210,10 +236,9 @@ export default class Narrative {
 	private isMounted: boolean = false;
 
 	private async initializeContents() {
-		//@ts-ignore
-		this.meetingId = this.$route.query.meetingId as string;
-		//@ts-ignore
-		this.uid = this.$route.query.uid as string;
+		this.meetingId = this.meetingId as string;
+
+		this.uid = this.uid as string;
 
 		// if (
 		//   this.meetingId === '' ||
@@ -225,7 +250,7 @@ export default class Narrative {
 		// }
 		if (this.topicShown) {
 			//@ts-ignore
-			if (this.$route.query.data === 'app-brainstorming') {
+			if (this.data === 'app-brainstorming') {
 				//@ts-ignore
 				this.contents = brainstorming_contents;
 				//@ts-ignore
@@ -233,7 +258,7 @@ export default class Narrative {
 				//@ts-ignore
 				this.fullScript = brainstorming_fullscript;
 				//@ts-ignore
-			} else if (this.$route.query.data === 'meeting') {
+			} else if (this.data === 'meeting') {
 				//@ts-ignore
 				this.contents = idlabmeeting_contents;
 				//@ts-ignore
@@ -319,7 +344,7 @@ export default class Narrative {
 		//     agenda: 1
 		//   };
 		// });
-
+		// 전체 스크립트 정제
 		this.totalTime =
 			this.fullScript[this.fullScript.length - 1].endTime - this.fullScript[0].startTime;
 
