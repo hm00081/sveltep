@@ -114,6 +114,7 @@ interface Script {
 }
 // Summarnote_API_1.0.pdf 참조 + time 속성 추가
 interface ActionItem {
+	// 따로 필요없어 보임, 해야할 일 목록.
 	actionItemId: string; // '1234'
 	text: string; // "API스펙 문서 수정",
 	who: string; // "이호진",
