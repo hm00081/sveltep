@@ -18,7 +18,7 @@ import {
 import _ from 'lodash';
 import axios from 'axios';
 import * as d3 from 'd3';
-// import api from '@/lib';
+// import api from '@/lib'; //TODO nodejs nlpTagger API 관련 찾아보기.
 // import { MorphWord } from '../nlp/nlp';
 // import data from '@/data/raw/out_일상대화_화장품_구매대화.json';
 // import morphedData from '@/data/morphed/morphed02.json'
