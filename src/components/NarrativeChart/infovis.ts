@@ -1,4 +1,4 @@
-//TODO topic map source code
+//TODO topic map source code, 살펴보기만 하기.
 // import Vue from 'vue';
 // import { Component } from 'vue-property-decorator';
 
@@ -183,7 +183,7 @@ export default class MindMap extends Vue {
 		P5: 'I. Jang',
 		P6: 'W. Kim'
 	};
-
+	//tODO 100분토론으로 하네.
 	private iconImgUser = {
 		김지영: 'http://thumb.mtstarnews.com/06/2018/07/2018072407172400401_1.jpg',
 		강병원: 'http://www.mtime.co.kr/news/photo/201812/12818_8854_2259.jpg',
